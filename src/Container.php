@@ -65,8 +65,11 @@ class Container implements ContainerInterface
      */
     public function has(string $id): bool
     {
-        $id = $this->getDefinition($id);
-        return isset($this->definitions[$id]) || isset($this->singleObjects[$id]) || isset($this->earlyObjects[$id]);
+        $name = $this->getDefinition($id);
+        return isset($this->definitions[$id])
+            || isset($this->definitions[$name])
+            || isset($this->singleObjects[$name])
+            || isset($this->earlyObjects[$name]);
     }
 
     /**
