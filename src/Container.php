@@ -67,7 +67,6 @@ class Container implements ContainerInterface
     {
         $name = $this->getDefinition($id);
         return isset($this->definitions[$id])
-            || isset($this->definitions[$name])
             || isset($this->singleObjects[$name])
             || isset($this->earlyObjects[$name]);
     }
