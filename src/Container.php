@@ -230,7 +230,7 @@ class Container implements ContainerInterface
         $constructor = $reflector->getConstructor();
 
         // Create an instance without calling the constructor.
-        $instance = $this->newClassInstance($reflector);
+        $instance = $this->newClassInstance($reflector, $arguments);
         // Is call constructor.
         $isCall = $constructor && $constructor->isPublic();
 
@@ -424,13 +424,14 @@ class Container implements ContainerInterface
     /**
      * Class new instance
      * @param ReflectionClass $reflector
+     * @param array $arguments
      * @return object
      * @throws ReflectionException
      */
-    protected function newClassInstance(ReflectionClass $reflector): object
+    protected function newClassInstance(ReflectionClass $reflector, array $arguments = []): object
     {
         if (isset($this->newClassInstanceHandler)) {
-            return ($this->newClassInstanceHandler)($reflector);
+            return ($this->newClassInstanceHandler)($reflector, $arguments);
         }
         return $reflector->newInstanceWithoutConstructor();
     }
