@@ -49,6 +49,12 @@ class Container implements ContainerInterface
     protected array $callbacks = [];
 
     /**
+     * Get instance create handler.
+     * @var Closure|null
+     */
+    protected ?Closure $newClassInstanceHandler;
+
+    /**
      * Get an object instance from the container.
      * @param string $id Class name or alias name.
      * @return mixed
@@ -224,7 +230,7 @@ class Container implements ContainerInterface
         $constructor = $reflector->getConstructor();
 
         // Create an instance without calling the constructor.
-        $instance = $reflector->newInstanceWithoutConstructor();
+        $instance = $this->newClassInstance($reflector);
         // Is call constructor.
         $isCall = $constructor && $constructor->isPublic();
 
@@ -413,5 +419,37 @@ class Container implements ContainerInterface
     public function bindCallbackAfterCall(string $name, callable $callback): static
     {
         return $this->bindCallback('after', $name, $callback);
+    }
+
+    /**
+     * Class new instance
+     * @param ReflectionClass $reflector
+     * @return object
+     * @throws ReflectionException
+     */
+    protected function newClassInstance(ReflectionClass $reflector): object
+    {
+        if (isset($this->newClassInstanceHandler)) {
+            return ($this->newClassInstanceHandler)($reflector);
+        }
+        return $reflector->newInstanceWithoutConstructor();
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getNewClassInstanceHandler(): ?Closure
+    {
+        return $this->newClassInstanceHandler;
+    }
+
+    /**
+     * @param Closure $newClassInstanceHandler
+     * @return static
+     */
+    public function setNewClassInstanceHandler(Closure $newClassInstanceHandler): static
+    {
+        $this->newClassInstanceHandler = $newClassInstanceHandler;
+        return $this;
     }
 }

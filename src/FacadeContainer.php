@@ -30,6 +30,8 @@ use Psr\Container\ContainerInterface;
  * @method static Container definition(string|array $name, mixed $definition = null)
  * @method static Container bindCallbackBeforeCall(string|Closure $name, callable $callback)
  * @method static Container bindCallbackAfterCall(string|Closure $name, callable $callback)
+ * @method static Closure|null getNewClassInstanceHandler()
+ * @method static static setNewClassInstanceHandler(Closure $newClassInstanceHandler)
  * @mixin Container
  * @see Container
  */
