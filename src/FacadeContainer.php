@@ -12,6 +12,7 @@ namespace LinFly;
 
 use Closure;
 use Psr\Container\ContainerInterface;
+use ReflectionClass;
 
 /**
  * Class Container
@@ -30,6 +31,7 @@ use Psr\Container\ContainerInterface;
  * @method static Container definition(string|array $name, mixed $definition = null)
  * @method static Container bindCallbackBeforeCall(string|Closure $name, callable $callback)
  * @method static Container bindCallbackAfterCall(string|Closure $name, callable $callback)
+ * @method static object newClassInstance(ReflectionClass $reflector, array $arguments = [])
  * @method static Closure|null getNewClassInstanceHandler()
  * @method static static setNewClassInstanceHandler(Closure $newClassInstanceHandler)
  * @mixin Container
