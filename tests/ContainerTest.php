@@ -92,7 +92,7 @@ class ContainerTest extends TestCase
 
     public function testMake()
     {
-        $this->assertInstanceOf(Container::class, FacadeContainer::make(Container::class));
+        $this->assertInstanceOf(Container::class, FacadeContainer::make(Container::class, newInstance: false));
     }
 
     public function testGetSingle()

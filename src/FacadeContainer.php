@@ -21,7 +21,7 @@ use ReflectionClass;
  * @method static bool has(string $id)
  * @method static bool hasInstance(string $name)
  * @method static bool isSingle(string $name)
- * @method static mixed make(string $name, array $arguments = [], bool $newInstance = false)
+ * @method static mixed make(string $name, array $arguments = [], bool $newInstance = true)
  * @method static mixed newInstance(string $name, array $arguments = [])
  * @method static mixed getSingle(string $name, array $arguments = [])
  * @method static mixed invokeMethod(array $name, array $arguments = [])

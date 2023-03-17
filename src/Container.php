@@ -106,7 +106,7 @@ class Container implements ContainerInterface
      * @param bool $newInstance Whether to create a new instance.
      * @return mixed
      */
-    public function make(string $name, array $arguments = [], bool $newInstance = false): mixed
+    public function make(string $name, array $arguments = [], bool $newInstance = true): mixed
     {
         if ($newInstance) {
             return $this->newInstance($name, $arguments);
