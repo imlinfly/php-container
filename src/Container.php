@@ -22,7 +22,6 @@ use LinFly\Exception\NotFoundException;
 use ReflectionNamedType;
 use ReflectionMethod;
 use Throwable;
-use function PHPUnit\Framework\matches;
 
 class Container implements ContainerInterface
 {
