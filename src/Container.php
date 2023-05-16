@@ -19,8 +19,10 @@ use ReflectionException;
 use ReflectionFunction;
 use ReflectionFunctionAbstract;
 use LinFly\Exception\NotFoundException;
+use ReflectionNamedType;
 use ReflectionMethod;
 use Throwable;
+use function PHPUnit\Framework\matches;
 
 class Container implements ContainerInterface
 {
@@ -295,7 +297,7 @@ class Container implements ContainerInterface
             // Parameter type
             $type = $parameter->getType();
             // Checks if it is a built-in type
-            if ($type && !$type->isBuiltin()) {
+            if ($type && !$this->isBuiltin($type)) {
                 $className = $type->getName();
                 // Determine if the incoming parameter is of that type
                 if (current($arguments) instanceof $className) {
@@ -318,6 +320,28 @@ class Container implements ContainerInterface
 
         // Returns the result of parameters replacement
         return $parameters;
+    }
+
+    /**
+     * Check if it is a built-in type
+     * @param ReflectionNamedType $type
+     * @return bool
+     */
+    protected function isBuiltin(ReflectionNamedType $type): bool
+    {
+        return match ($type->getName()) {
+            Closure::class,
+            \Generator::class,
+            \Stringable::class,
+            \Traversable::class,
+            \Serializable::class,
+            \Throwable::class,
+            \IteratorAggregate::class,
+            \ArrayAccess::class,
+            \WeakReference::class,
+            \JsonSerializable::class => true,
+            default => $type->isBuiltin(),
+        };
     }
 
     /**
